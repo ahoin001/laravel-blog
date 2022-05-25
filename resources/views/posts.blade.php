@@ -7,7 +7,7 @@
 
     <article>
 
-        <h1> <a href="/post/1">My First Post</a> </h1>
+        <h1> <a href="/posts/my-first-post">My First Post</a> </h1>
 
         <p>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores id labore magnam quo culpa sint unde doloribus, fuga repellat cumque incidunt. Quas dolore molestias facere corrupti modi? Blanditiis, placeat soluta.
@@ -21,7 +21,7 @@
 
     <article>
 
-        <h1> <a href="/post">My Second Post</a> </h1>
+        <h1> <a href="/posts/my-second-post">My Second Post</a> </h1>
 
         <p>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores id labore magnam quo culpa sint unde doloribus, fuga repellat cumque incidunt. Quas dolore molestias facere corrupti modi? Blanditiis, placeat soluta.
@@ -35,7 +35,7 @@
 
     <article>
 
-        <h1> <a href="/post">My Third Post</a> </h1>
+        <h1> <a href="/posts/my-third-post">My Third Post</a> </h1>
 
         <p>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores id labore magnam quo culpa sint unde doloribus, fuga repellat cumque incidunt. Quas dolore molestias facere corrupti modi? Blanditiis, placeat soluta.
