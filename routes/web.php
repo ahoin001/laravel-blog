@@ -1,7 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Models\Post;
+use Illuminate\Support\Facades\File;
+use Spatie\YamlFrontMatter\YamlFrontMatter;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,7 +16,28 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get("/", function () {
-    return view("posts");
+    $files = File::files(resource_path("posts"));
+
+    $posts = [];
+
+    foreach ($files as $file) {
+        // extract yamlmatter into object
+        $document = YamlFrontMatter::parse(file_get_contents($file));
+
+        // create array of Posts using yaml
+        $posts[] = new Post(
+            $document->matter("title"),
+            $document->matter("excerpt"),
+            $document->matter("date"),
+            $document->body()
+        );
+    }
+
+    dd($posts);
+
+    // return view("posts", [
+    //     "posts" => Post::all(),
+    // ]);
 });
 
 Route::get("/post", function () {
@@ -25,21 +48,9 @@ Route::get("/post", function () {
     ]);
 });
 
-Route::get("/posts/{post}", function ($post) {
-    // * Wildcard will be path to unique blog post
-    $path = __DIR__ . "/../resources/posts/{$post}.html";
-
-    // dd($path);
-
-    if (!file_exists($path)) {
-        // * Laravel comes with abort and we can return 404
-        // abort(404);
-
-        return redirect("/");
-    }
-    $post = file_get_contents($path);
-
+Route::get("/posts/{post}", function ($postName) {
+    // ? Find post by its slug and pass it to a view called "post"
     return view("post", [
-        "post" => $post,
+        "post" => Post::find($postName),
     ]);
 })->where("post", "[A-z\-]+"); // * @post is wildcard, Regx To only accept one or letters A-z
