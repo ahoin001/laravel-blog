@@ -40,7 +40,9 @@ class Post
     // * Returns all posts in post directory
     public static function all()
     {
-        return cache()->rememberForever("posts.all", function () {
+        // return Cache::add("posts.all", "value", 5);
+
+        return cache()->remember("posts.all", 5, function () {
             return collect(File::files(resource_path("posts")))
                 ->map(function ($file) {
                     // extract yamlmatter into object from post file
