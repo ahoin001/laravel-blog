@@ -3,9 +3,10 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\File;
-
+use Spatie\YamlFrontMatter\YamlFrontMatter;
 class Post
 {
     public $title;
@@ -16,41 +17,47 @@ class Post
 
     public $body;
 
-    public function __construct($title, $excerpt, $date, $body)
+    public $slug;
+
+    public function __construct($title, $excerpt, $date, $body, $slug)
     {
         $this->title = $title;
         $this->excerpt = $excerpt;
         $this->date = $date;
         $this->body = $body;
+        $this->slug = $slug;
     }
 
     // * Checks Resource directory to see if we have a post with provided post name
-    public static function find($postName)
+    public static function find($slug)
     {
-        if (
-            !file_exists($path = resource_path("/posts/{$postName}.html")) // * resource path starts at resource dir
-        ) {
-            // * laravel provided error
-            throw new ModelNotFoundException();
-        }
+        //   * Search blog posts for one matching slug
+        $posts = static::all();
 
-        // * ::remember retrieves from cache,
-        // * but if requested item doesn't exsist use callback function and add item to cache
-
-        return Cache::remember('posts.{$post}', 5, function () use ($path) {
-            // var_dump("file_get_contents");
-            return file_get_contents($path);
-        });
+        return $posts->firstWhere("slug", $slug);
     }
 
     // * Returns all posts in post directory
     public static function all()
     {
-        $blogFiles = File::files(resource_path("/posts"));
+        return cache()->rememberForever("posts.all", function () {
+            return collect(File::files(resource_path("posts")))
+                ->map(function ($file) {
+                    // extract yamlmatter into object from post file
+                    $document = YamlFrontMatter::parse(
+                        file_get_contents($file)
+                    );
 
-        // ? Iterate array of SplFileInfo objects and use getContents method to get html content from each file in new array
-        return array_map(function ($blogFile) {
-            return $blogFile->getContents();
-        }, $blogFiles);
+                    // return to new array of Posts using Pst class with yaml data
+                    return new Post(
+                        $document->matter("title"),
+                        $document->matter("excerpt"),
+                        $document->matter("date"),
+                        $document->body(),
+                        $document->matter("slug")
+                    );
+                })
+                ->sortByDesc("date"); // * Helpful collection method
+        });
     }
 }

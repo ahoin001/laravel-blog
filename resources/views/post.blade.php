@@ -8,7 +8,8 @@
 <article>
 
     {{-- This page is a template, blog post will be provided from wildcard in route --}}
-    <?= $post; ?>
+   <h1><?= $post->title; ?></h1> 
+   <div><?= $post->body; ?></div>
 
 </article>
 

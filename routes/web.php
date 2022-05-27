@@ -16,28 +16,9 @@ use Spatie\YamlFrontMatter\YamlFrontMatter;
 */
 
 Route::get("/", function () {
-    $files = File::files(resource_path("posts"));
-
-    $posts = [];
-
-    foreach ($files as $file) {
-        // extract yamlmatter into object
-        $document = YamlFrontMatter::parse(file_get_contents($file));
-
-        // create array of Posts using yaml
-        $posts[] = new Post(
-            $document->matter("title"),
-            $document->matter("excerpt"),
-            $document->matter("date"),
-            $document->body()
-        );
-    }
-
-    dd($posts);
-
-    // return view("posts", [
-    //     "posts" => Post::all(),
-    // ]);
+    return view("posts", [
+        "posts" => Post::all(),
+    ]);
 });
 
 Route::get("/post", function () {
