@@ -8,6 +8,6 @@
     @yield('heading')    
 
     {{-- place content here --}}
-    @yield('content') 
+   {{ $slot }}
 
 </body>
