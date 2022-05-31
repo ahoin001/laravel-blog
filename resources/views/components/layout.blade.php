@@ -5,7 +5,7 @@
 
 <body>
 
-    @yield('heading')    
+    @yield('content')    
 
     {{-- place content here --}}
    {{ $slot }}

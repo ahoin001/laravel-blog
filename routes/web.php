@@ -29,9 +29,9 @@ Route::get("/post", function () {
     ]);
 });
 
-Route::get("/posts/{post}", function ($postName) {
+Route::get("/posts/{post}", function ($id) {
     // ? Find post by its slug and pass it to a view called "post"
     return view("post", [
-        "post" => Post::find($postName),
+        "post" => Post::findOrFail($id),
     ]);
-})->where("post", "[A-z\-]+"); // * @post is wildcard, Regx To only accept one or letters A-z
+});
