@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Models\Post;
+use App\Models\Category;
 use Illuminate\Support\Facades\File;
 use Spatie\YamlFrontMatter\YamlFrontMatter;
 /*
@@ -33,5 +34,13 @@ Route::get("/posts/{post}", function ($id) {
     // ? Find post by its slug and pass it to a view called "post"
     return view("post", [
         "post" => Post::findOrFail($id),
+    ]);
+});
+
+// * Route Model Binding used to let Laravel find the given object by id provided in wildcard,
+// * in this case {category} is an id, then laravel using Category type hint will turn the argument into an instance of category with that id
+Route::get("categories/{category}", function (Category $category) {
+    return view("posts", [
+        "posts" => $category->posts, // returns all posts assoicated with category
     ]);
 });

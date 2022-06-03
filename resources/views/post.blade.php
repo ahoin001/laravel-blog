@@ -5,6 +5,7 @@
 
         {{-- This page is a template, blog post will be provided from wildcard in route --}}
         <h1> {{$post->title}}</h1> 
+        <a href="/categories/{{$post->category->id}}">{{$post->category->name}}</a>
         <div> {!! $post->body !!}</div>
 
     </article>
