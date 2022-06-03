@@ -1,14 +1,16 @@
-@extends('layout')
+<x-layout>
 
-@section('content')
-<article>
+<x-slot name="content">
+    <article>
 
-    {{-- This page is a template, blog post will be provided from wildcard in route --}}
-   <h1> {{$post->title}}</h1> 
-   <div> {!! $post->body !!}</div>
+        {{-- This page is a template, blog post will be provided from wildcard in route --}}
+        <h1> {{$post->title}}</h1> 
+        <div> {!! $post->body !!}</div>
 
-</article>
+    </article>
 
-<a href="/">Go Home</a>
+    <a href="/">Go Home</a>
 
-@endsection
+</x-slot>
+
+</x-layout>

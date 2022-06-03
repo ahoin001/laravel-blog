@@ -5,9 +5,6 @@
 
 <body>
 
-    @yield('content')    
-
-    {{-- place content here --}}
-   {{ $slot }}
+   {{ $content }}
 
 </body>

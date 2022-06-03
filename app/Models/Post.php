@@ -9,9 +9,14 @@ class Post extends Model
 {
     use HasFactory;
 
-    // * Everything can be mass assigned except provided column name
-    protected $guarded = ["id"];
+    // * Everything can be mass assigned except provided attribute name
+    protected $guarded = [];
 
     // * Can be mass assigned
     // protected $fillable = ["title", "excerpt", "body"];
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
 }
