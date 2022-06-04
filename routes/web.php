@@ -18,7 +18,7 @@ use Spatie\YamlFrontMatter\YamlFrontMatter;
 
 Route::get("/", function () {
     return view("posts", [
-        "posts" => Post::all(),
+        "posts" => Post::with("category")->get(),
     ]);
 });
 
@@ -37,9 +37,9 @@ Route::get("/posts/{post}", function ($id) {
     ]);
 });
 
-// * Route Model Binding used to let Laravel find the given object by id provided in wildcard,
-// * in this case {category} is an id, then laravel using Category type hint will turn the argument into an instance of category with that id
-Route::get("categories/{category}", function (Category $category) {
+// * Route Model Binding used to let Laravel find the given object by column name provided in wildcard,
+// * in this case {category:slug} uses slug, then laravel using Category type hint will turn the argument into an instance of category with that slug
+Route::get("categories/{category:slug}", function (Category $category) {
     return view("posts", [
         "posts" => $category->posts, // returns all posts assoicated with category
     ]);

@@ -8,8 +8,9 @@
                         {{$post->title }}
                     </a> 
                 </h1> 
-                <a href="/categories/{{$post->category->id}}">{{$post->category->name}}</a>
-                <div> {{$post->excerpt}}</div>
+                {{-- * ->category returns category asscoiated with post, then we can access columns of category --}}
+                <a href="/categories/{{$post->category->slug}}">{{$post->category->name}}</a>
+                <div> {!! $post->excerpt !!}</div>
             </article>
     
         @endforeach
