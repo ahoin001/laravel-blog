@@ -5,7 +5,8 @@
 
         {{-- This page is a template, blog post will be provided from wildcard in route --}}
         <h1> {{$post->title}}</h1> 
-        <p>By: <a href="#">{{$post->author->name}}</a></p> <a href="/categories/{{$post->category->slug}}">{{$post->category->name}}</a>
+        <p>By: <a href="/authors/{{$post->author->id}}">{{$post->author->name}}</a></p>
+        <a href="/categories/{{$post->category->slug}}">{{$post->category->name}}</a>
         <div> {!! $post->body !!}</div>
 
     </article>

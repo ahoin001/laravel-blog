@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Models\Post;
+use App\Models\User;
 use App\Models\Category;
 use Illuminate\Support\Facades\File;
 use Spatie\YamlFrontMatter\YamlFrontMatter;
@@ -19,7 +20,7 @@ use Spatie\YamlFrontMatter\YamlFrontMatter;
 Route::get("/", function () {
     return view("posts", [
         "posts" => Post::latest("created_at")
-            ->with("category")
+            ->with("category", "author") //  * model method names
             ->get(),
     ]);
 });
@@ -44,5 +45,12 @@ Route::get("/posts/{post}", function ($id) {
 Route::get("categories/{category:slug}", function (Category $category) {
     return view("posts", [
         "posts" => $category->posts, // returns all posts assoicated with category
+    ]);
+});
+
+Route::get("authors/{author}", function (User $author) {
+    // dd($author);
+    return view("posts", [
+        "posts" => $author->posts, // returns all posts assoicated with category
     ]);
 });
