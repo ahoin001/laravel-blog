@@ -8,7 +8,7 @@
                         {{$post->title }}
                     </a> 
                 </h1> 
-                <p>By: <a href="/authors/{{$post->author->id}}">{{$post->author->name}}</a></p>
+                <p>By: <a href="/authors/{{$post->author->username}}">{{$post->author->name}}</a></p>
                 
                 {{-- * ->category returns category asscoiated with post, then we can access columns of category --}}
                 <a href="/categories/{{$post->category->slug}}">{{$post->category->name}}</a>
