@@ -17,6 +17,7 @@ class Post extends Model
 
     public function category()
     {
+        // ? These function names matter. Laravel will look for foreign key user_id. If it was foo, foo_id
         return $this->belongsTo(Category::class);
     }
 
@@ -25,8 +26,8 @@ class Post extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function user()
+    public function author()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, "user_id");
     }
 }

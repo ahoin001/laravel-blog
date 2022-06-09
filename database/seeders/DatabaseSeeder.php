@@ -14,50 +14,19 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        \App\Models\User::truncate();
-        \App\Models\Category::truncate();
-        \App\Models\Post::truncate();
-
-        $user = \App\Models\User::factory()->create();
-
-        $personal = \App\Models\Category::create([
-            "name" => "Personal",
-            "slug" => "personal",
+        // * Can overide  a factories models value by passing array of desired values
+        $user = \App\Models\User::factory()->create([
+            "name" => "Alexander Hoinville",
         ]);
 
-        $family = \App\Models\Category::create([
-            "name" => "Family",
-            "slug" => "family",
-        ]);
-
-        $work = \App\Models\Category::create([
-            "name" => "Work",
-            "slug" => "work",
-        ]);
-
-        \App\Models\Post::create([
-            "category_id" => $family->id,
+        // * Post factory was buil able to create an associated user and category (check postfactory file)
+        \App\Models\Post::factory(3)->create([
             "user_id" => $user->id,
-            "title" => "My Family Post",
-            "slug" => "my-first-post",
-            "excerpt" => "<p>Lorem Ipsum dollar amit</p>",
-            "body" =>
-                "<p>Lorem ipsum dolor sit amet , morbi viverrra vehicula nisl eget</p>",
         ]);
 
-        \App\Models\Post::create([
-            "category_id" => $work->id,
-            "user_id" => $user->id,
-            "title" => "My Work Post",
-            "slug" => "my-work-post",
-            "excerpt" => "<p>Lorem Ipsum dollar amit</p>",
-            "body" =>
-                "<p>Lorem ipsum dolor sit amet , morbi viverrra vehicula nisl eget</p>",
-        ]);
-
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        // * Only needed when you don't refresh database at the start
+        // \App\Models\User::truncate();
+        // \App\Models\Category::truncate();
+        // \App\Models\Post::truncate();
     }
 }
