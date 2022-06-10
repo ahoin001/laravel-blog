@@ -19,9 +19,7 @@ use Spatie\YamlFrontMatter\YamlFrontMatter;
 
 Route::get("/", function () {
     return view("posts", [
-        "posts" => Post::latest("created_at")
-            ->with("category", "author") //  * model method names
-            ->get(),
+        "posts" => Post::latest("created_at")->get(),
     ]);
 });
 
@@ -55,19 +53,3 @@ Route::get("authors/{author:username}", function (User $author) {
         "posts" => $author->posts, // returns all posts assoicated with category
     ]);
 });
-
-// * Route Model Binding used to let Laravel find the given object by column name provided in wildcard,
-// * in this case {category:slug} uses slug column, then laravel using Category type hint will turn the argument into an instance of category that matches slug
-// Route::get("categories/{category:slug}", function (Category $category) {
-//     return view("posts", [
-//         "posts" => $category->posts->load(["category,author"]), // returns all posts assoicated with category
-//     ]);
-// });
-
-// ? load() is used instead of with since we already have the model desired.
-// Route::get("authors/{author:username}", function (User $author) {
-//     // dd($author);
-//     return view("posts", [
-//         "posts" => $author->posts->load(["category", "author"]), // returns all posts assoicated with category
-//     ]);
-// });
