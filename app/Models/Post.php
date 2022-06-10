@@ -12,22 +12,23 @@ class Post extends Model
     // * Everything can be mass assigned except provided attribute name
     protected $guarded = [];
 
-    // * Can be mass assigned
+    // * Specified attributes can be mass assigned
     // protected $fillable = ["title", "excerpt", "body"];
+
+    // ? $with property added here will make every Post query WITH the listed related tables by default
+    // ? by using the methods created below
+    protected $with = ["category", "author"];
 
     public function category()
     {
-        // ? These function names matter. Laravel will look for foreign key user_id. If it was foo, foo_id
         return $this->belongsTo(Category::class);
     }
 
-    /**
-     * Get the user that owns the Post
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
+    // ?M Method names matter. Laravel looks for foreign key author_id. If it was foo, foo_id
     public function author()
     {
+        // * Since we chose our own method name for readability, we have to use
+        // * 2nd argument to specify what foreign key to use
         return $this->belongsTo(User::class, "user_id");
     }
 }

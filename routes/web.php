@@ -41,16 +41,33 @@ Route::get("/posts/{post}", function ($id) {
 });
 
 // * Route Model Binding used to let Laravel find the given object by column name provided in wildcard,
-// * in this case {category:slug} uses slug, then laravel using Category type hint will turn the argument into an instance of category with that slug
+// * in this case {category:slug} uses slug column, then laravel using Category type hint will turn the argument into an instance of category that matches slug
 Route::get("categories/{category:slug}", function (Category $category) {
     return view("posts", [
         "posts" => $category->posts, // returns all posts assoicated with category
     ]);
 });
 
+// ? load() is used instead of with since we already have the model desired.
 Route::get("authors/{author:username}", function (User $author) {
     // dd($author);
     return view("posts", [
         "posts" => $author->posts, // returns all posts assoicated with category
     ]);
 });
+
+// * Route Model Binding used to let Laravel find the given object by column name provided in wildcard,
+// * in this case {category:slug} uses slug column, then laravel using Category type hint will turn the argument into an instance of category that matches slug
+// Route::get("categories/{category:slug}", function (Category $category) {
+//     return view("posts", [
+//         "posts" => $category->posts->load(["category,author"]), // returns all posts assoicated with category
+//     ]);
+// });
+
+// ? load() is used instead of with since we already have the model desired.
+// Route::get("authors/{author:username}", function (User $author) {
+//     // dd($author);
+//     return view("posts", [
+//         "posts" => $author->posts->load(["category", "author"]), // returns all posts assoicated with category
+//     ]);
+// });
